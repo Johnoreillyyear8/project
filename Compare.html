@@ -1,0 +1,217 @@
+
+
+<html>
+    <!--<script src="data.json"></script>-->
+    <!-- import my data -->
+    <script src="data.json"></script>
+    <link rel="stylesheet" href="Compare.css">
+    
+ <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+     <nav>
+        <label class="logo"> Poverty</label>
+        <ul>
+            <li><a class="active" href="index.html">Home</a></li>
+            <li><a class="active" href="Compare.html">Graphs</a></li>
+            <li><a class="active" href="About.html">About me</a></li>
+                    </ul>
+        </nav>
+
+    <font face = "poppins"><center><h1>Compare Countries</h1></center></font>
+     <font face = "poppins"><center><h4>Direct Economic Loss attributed to agricultural disaster (1.5.2)</h4></center></font>
+
+
+            
+    <body >
+
+        <!-- HTML canvas tag with an id, so it can be referenced in code -->  
+        <canvas id="myc" width="800px" height="60px"></canvas><br>
+        <canvas id="myc2" width="800px" height="60px"></canvas><br>
+        <!-- HTML select tag (pulldown), with a onchange event pointing to a function -->
+        <select class="browser-default" id='mysel' onchange="checkSelect(this.value)"></select>
+        <select class="browser-default" id='mysel2' onchange="checkSelect2(this.value)"></select>
+         <font face = "poppins"><center><h4>Per $10'000</h4></center></font>
+
+    <p> This is a tool to compare the loss of GDP from country to country. <br>
+        This data being used was provided by the <a href="https://unstats.un.org/sdgs/indicators/database/">UN database</a> this data was wrangled and transfered from CSV format to JSON data by a <a href="https://www.csvjson.com/csv2json">converter.</a><br> Hope you enjoy the interactivity in my website<br> - Your Friend from John O'Reilly Desings</p>
+        
+    </body>
+
+
+     
+<script>
+    
+        console.log(data);
+    
+        var afghan = data[0].Value;
+        console.log(afghan);     
+    
+        var nospace = afghan.replace(" "," ");
+        console.log(nospace);
+    
+    var afghanint = parseInt(nospace);
+    console.log(afghanint);
+        
+    // loop to create options for select pulldown tag using str concatenation
+    var mycnames = "";
+    var cname = "";
+    for (i=0;i < data.length; i=i+1) {
+        // use if to check if there is a duplicate country
+        if (data[i].dims.COUNTRY != cname) {
+           mycnames = mycnames + "<option>" + data[i].dims.COUNTRY + "</option>";
+           cname = data[i].dims.COUNTRY;
+        }
+    }
+
+    // grab a reference to select tag and store it in a variable
+    var selpointer = document.getElementById('mysel');
+    // use innerHTML function to fill select pulldown with options created in loop
+    selpointer.innerHTML = mycnames;
+        
+    var selpointer = document.getElementById('mysel2');
+    // use innerHTML function to fill select pulldown with options created in loop
+    selpointer.innerHTML = mycnames;
+    
+    // grab a reference to the canvas and store it in a variable, grab drawing context
+    var c = document.getElementById('myc');
+    var ctx = c.getContext('2d');
+    
+    // function that is called onchange to select pulldown
+    function checkSelect(cname) { 
+        // sequential search through entire json data for selected country
+        for (i=0;i < data.length; i=i+1) {
+            if (data[i].dims.COUNTRY == cname) {
+               // draw white rectangle to erase previous rectangle
+               ctx.fillStyle = "white"; 
+               ctx.fillRect(0,0,800,50); 
+               // draw red rectangle the size of all deaths
+               ctx.fillStyle = "red";
+               var remhardbrace = data[i].Value.split('[')[0]
+               var cleandata = remhardbrace.split(' ').join(''); // remove all spaces
+               ctx.fillRect(0,0,cleandata/100,50);
+               ctx.fillStyle = "black";
+               ctx.font = "20px Arial";
+               ctx.fillText(cleandata,10,30);
+               break; // once found, break out of loop for efficiency
+            }
+        }
+    }
+    function checkSelect2(cname) { 
+            var c = document.getElementById('myc2');
+    var ctx = c.getContext('2d');
+        // sequential search through entire json data for selected country
+        for (i=0;i < data.length; i=i+1) {
+            if (data[i].dims.COUNTRY == cname) {
+               // draw white rectangle to erase previous rectangle
+               ctx.fillStyle = "white"; 
+               ctx.fillRect(0,0,800,50); 
+               // draw red rectangle the size of all deaths
+               ctx.fillStyle = "red";
+               var remhardbrace = data[i].Value.split('[')[0]
+               var cleandata = remhardbrace.split(' ').join(''); // remove all spaces
+               ctx.fillRect(0,0,cleandata/100,50);
+               ctx.fillStyle = "black";
+               ctx.font = "20px Arial";
+               ctx.fillText(cleandata,10,30);
+               break; // once found, break out of loop for efficiency
+            }
+        }
+    }
+</script>
+    
+     <script>
+    
+        console.log(data);
+    
+        var world = data[0].Value;
+        console.log(world);     
+    
+        var nospace = world.replace(" "," ");
+        console.log(nospace);
+    
+    var worldint = parseInt(nospace);
+    console.log(worldint);
+        
+    // loop to create options for select pulldown tag using str concatenation
+    var mycnames = "";
+    var cname = "";
+    for (i=0;i < data.length; i=i+1) {
+        // use if to check if there is a duplicate country
+        if (data[i].dims.COUNTRY != cname) {
+           mycnames = mycnames + "<option>" + data[i].dims.COUNTRY + "</option>";
+           cname = data[i].dims.COUNTRY;
+        }
+    }
+
+    // grab a reference to select tag and store it in a variable
+    var selpointer = document.getElementById('mysel');
+    // use innerHTML function to fill select pulldown with options created in loop
+    selpointer.innerHTML = mycnames;
+    
+    // grab a reference to the canvas and store it in a variable, grab drawing context
+    var c = document.getElementById('myc');
+    var ctx = c.getContext('2d');
+    
+    // function that is called onchange to select pulldown
+    function checkSelect(cname) { 
+        // sequential search through entire json data for selected country
+        for (i=0;i < data.length; i=i+1) {
+            if (data[i].dims.COUNTRY == cname) {
+               // draw white rectangle to erase previous rectangle
+               ctx.fillStyle = "white"; 
+               ctx.fillRect(0,0,800,50); 
+               // draw red rectangle the size of all deaths
+               ctx.fillStyle = "blue";
+               var remhardbrace = data[i].Value.split('[')[0]
+               var cleandata = remhardbrace.split(' ').join(''); // remove all spaces
+               ctx.fillRect(0,0,cleandata/100,50);
+               ctx.fillStyle = "black";
+               ctx.font = "20px Arial";
+               ctx.fillText(cleandata,10,30);
+               break; // once found, break out of loop for efficiency
+            }
+        }
+    }
+</script>
+<style>
+    .button3{
+ display:inline-block;
+ padding:0.3em 1.2em;
+ margin:0 0.3em 0.3em 0;
+ border-radius:2em;
+ box-sizing: border-box;
+ text-decoration:none;
+ font-family:'Roboto',sans-serif;
+ font-weight:300;
+ color:#FFFFFF;
+ background-color:#4eb5f1;
+ text-align:center;
+ transition: all 0.2s;
+}
+.button3:hover{
+ background-color:#4095c6;
+}
+@media all and (max-width:30em){
+ .button3{
+  display:block;
+  margin:0.2em auto;
+ }
+}
+    </style>
+    <center> <div style="position: absolute; bottom: -200px; background-color: black; color: white; width: 1500px; height: 60px; left: 0px;"> <br>John O'Reilly// Year 9// Scaddings</div> </center>
+     
+<head>  
+
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+    
+        
+
+</html>
